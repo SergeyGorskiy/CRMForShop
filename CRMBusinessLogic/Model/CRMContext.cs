@@ -4,7 +4,7 @@ namespace CRMBusinessLogic.Model
 {
     public class CRMContext :DbContext
     {
-        public CRMContext() : base("CRMConnection") {}
+        public CRMContext() : base("CRMShopDB") {}
         public DbSet<Check> Checks { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
