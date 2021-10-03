@@ -36,23 +36,44 @@ namespace CRMBusinessLogic.Model
         {
             isWorking = true;
             Task.Run(() => CreateCarts(10, 1000));
-            while (true)
+            var cashDeskTasks = CashDesks.Select(c => new Task(() => CashDeskWork(c, 1000)));
+            foreach (var task in cashDeskTasks)
             {
-                var cash = CashDesks[rnd.Next(CashDesks.Count - 1)];
-                var money = cash.Dequeue();
+                task.Start();
             }
         }
 
+        public void Stop()
+        {
+            isWorking = false;
+        }
+
+        private void CashDeskWork(CashDesk cashDesk, int sleep)
+        {
+
+            while (isWorking)
+            {
+                if (cashDesk.Count > 0)
+                {
+                    cashDesk.Dequeue();
+                    Thread.Sleep(sleep);
+                }
+            }
+        }
         private void CreateCarts(int customerCounts, int sleep)
         {
             while (isWorking)
             {
                 var customers = generator.GetNewCustomers(customerCounts);
-                var carts = new Queue<Cart>();
                 foreach (var customer in customers)
                 {
+                    var cart = new Cart(customer);
+                    foreach (var product in generator.GetRandomProducts(10, 30))
+                    {
+                        cart.Add(product);
+                    }
                     var cash = CashDesks[rnd.Next(CashDesks.Count - 1)];
-                    cash.Enqueue(carts.Dequeue());
+                    cash.Enqueue(cart);
                 }
                 Thread.Sleep(sleep);
             }
