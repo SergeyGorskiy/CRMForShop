@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CashBoxView.cs" />
     <Compile Include="Catalog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +98,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Catalog.resx">
       <DependentUpon>Catalog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelForm.resx">
+      <DependentUpon>ModelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductForm.resx">
       <DependentUpon>ProductForm.cs</DependentUpon>

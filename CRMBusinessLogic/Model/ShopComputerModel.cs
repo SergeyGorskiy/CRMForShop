@@ -35,7 +35,7 @@ namespace CRMBusinessLogic.Model
         public void Start()
         {
             isWorking = true;
-            Task.Run(() => CreateCarts(10, 1000));
+            Task.Run(() => CreateCarts(10, 100));
             var cashDeskTasks = CashDesks.Select(c => new Task(() => CashDeskWork(c, 1000)));
             foreach (var task in cashDeskTasks)
             {
@@ -72,7 +72,7 @@ namespace CRMBusinessLogic.Model
                     {
                         cart.Add(product);
                     }
-                    var cash = CashDesks[rnd.Next(CashDesks.Count - 1)];
+                    var cash = CashDesks[rnd.Next(CashDesks.Count)];
                     cash.Enqueue(cart);
                 }
                 Thread.Sleep(sleep);
