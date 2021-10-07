@@ -16,6 +16,8 @@ namespace CRMBusinessLogic.Model
         public List<Check> Checks { get; set; } = new List<Check>();
         public List<Sell> Sells { get; set; } = new List<Sell>();
         public Queue<Seller> Sellers { get; set; } = new Queue<Seller>();
+        public int CustomerSpeed { get; set; } = 100;
+        public int CashDeskSpeed { get; set; } = 100;
 
         public ShopComputerModel()
         {
@@ -26,7 +28,6 @@ namespace CRMBusinessLogic.Model
             {
                 Sellers.Enqueue(seller);
             }
-
             for (int i = 0; i < 3; i++)
             {
                 CashDesks.Add(new CashDesk(CashDesks.Count, Sellers.Dequeue()));
@@ -35,22 +36,19 @@ namespace CRMBusinessLogic.Model
         public void Start()
         {
             isWorking = true;
-            Task.Run(() => CreateCarts(10, 100));
-            var cashDeskTasks = CashDesks.Select(c => new Task(() => CashDeskWork(c, 1000)));
+            Task.Run(() => CreateCarts(10, CustomerSpeed));
+            var cashDeskTasks = CashDesks.Select(c => new Task(() => CashDeskWork(c, CashDeskSpeed)));
             foreach (var task in cashDeskTasks)
             {
                 task.Start();
             }
         }
-
         public void Stop()
         {
             isWorking = false;
         }
-
         private void CashDeskWork(CashDesk cashDesk, int sleep)
         {
-
             while (isWorking)
             {
                 if (cashDesk.Count > 0)
@@ -77,7 +75,6 @@ namespace CRMBusinessLogic.Model
                 }
                 Thread.Sleep(sleep);
             }
-            
         }
     }
 }
