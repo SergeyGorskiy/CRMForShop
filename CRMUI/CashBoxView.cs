@@ -6,14 +6,14 @@ namespace CRMUI
 {
     public class CashBoxView
     {
-        private CashDesk _cashDesk;
+        private CashDesk cashDesk;
         public Label CashDeskName { get; set; }
         public NumericUpDown Price { get; set; }
         public ProgressBar QueueLenght { get; set; }
         public Label LeaveCustomersCount { get; set; }
         public CashBoxView(CashDesk cashDesk, int number, int x, int y)
         {
-            _cashDesk = cashDesk;
+            this.cashDesk = cashDesk;
             CashDeskName = new Label();
             Price = new NumericUpDown();
             QueueLenght = new ProgressBar();
@@ -32,7 +32,7 @@ namespace CRMUI
             Price.TabIndex = number;
             Price.Maximum = 10000000000000000000;
 
-            QueueLenght.Location = new System.Drawing.Point(x + 250, 286);
+            QueueLenght.Location = new System.Drawing.Point(x + 250, y);
             QueueLenght.Maximum = cashDesk.MaxQueueLenght;
             QueueLenght.Name = "progressBar" + number;
             QueueLenght.Size = new System.Drawing.Size(100, 23);
@@ -54,8 +54,8 @@ namespace CRMUI
             Price.Invoke((Action) delegate
             {
                 Price.Value += e.Price;
-                QueueLenght.Value = _cashDesk.Count;
-                LeaveCustomersCount.Text = _cashDesk.ExitCustomer.ToString();
+                QueueLenght.Value = cashDesk.Count;
+                LeaveCustomersCount.Text = cashDesk.ExitCustomer.ToString();
             });
         }
     }

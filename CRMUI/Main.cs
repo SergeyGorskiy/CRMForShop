@@ -14,10 +14,13 @@ namespace CRMUI
     public partial class Main : Form
     {
         CRMContext db;
+        private Cart cart;
+        private Customer customer;
         public Main()
         {
             InitializeComponent();
             db = new CRMContext();
+            cart = new Cart(customer);
         }
         private void ProductStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -77,6 +80,56 @@ namespace CRMUI
         {
             var form = new ModelForm();
             form.Show();
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                listBox1.Invoke((Action) delegate
+                {
+                    listBox1.Items.AddRange(db.Products.ToArray());
+                    UpdateLists();
+                });
+            });
+        }
+
+        private void listBox1_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem is Product product)
+            {
+                cart.Add(product);
+                listBox2.Items.Add(product);
+                UpdateLists();
+            }
+        }
+
+        private void UpdateLists()
+        {
+            listBox2.Items.Clear();
+            listBox2.Items.AddRange(cart.GetAllProducts().ToArray());
+            label1.Text = "Итого: " + cart.Price;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var form = new Login();
+            form.ShowDialog();
+            if (form.DialogResult == DialogResult.OK)
+            {
+                var tempCustomer = db.Customers.FirstOrDefault(c => c.Name.Equals(form.Customer.Name));
+                if (tempCustomer != null)
+                {
+                    customer = tempCustomer;
+                }
+                else
+                {
+                    db.Customers.Add(form.Customer);
+                    db.SaveChanges();
+                    customer = form.Customer;
+                }
+            }
+            linkLabel1.Text = $"Здравствуй, {customer.Name}";
         }
     }
 }
