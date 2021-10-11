@@ -54,7 +54,7 @@ namespace CRMBusinessLogic.Model.Tests
             cart2.Add(product2);
             cart2.Add(product2);
 
-            var cashdesk = new CashDesk(1, seller);
+            var cashdesk = new CashDesk(1, seller, null);
             cashdesk.MaxQueueLenght = 10;
             cashdesk.Enqueue(cart1);
             cashdesk.Enqueue(cart2);

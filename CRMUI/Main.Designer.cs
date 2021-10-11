@@ -54,7 +54,7 @@ namespace CRMUI
             this.modelToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(916, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(473, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -143,15 +143,15 @@ namespace CRMUI
             // listBox2
             // 
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(290, 29);
+            this.listBox2.Location = new System.Drawing.Point(263, 55);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(214, 329);
+            this.listBox2.Size = new System.Drawing.Size(188, 303);
             this.listBox2.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(287, 374);
+            this.label1.Location = new System.Drawing.Point(260, 374);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 13);
             this.label1.TabIndex = 3;
@@ -159,17 +159,18 @@ namespace CRMUI
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(290, 400);
+            this.button1.Location = new System.Drawing.Point(263, 400);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(214, 23);
+            this.button1.Size = new System.Drawing.Size(188, 23);
             this.button1.TabIndex = 4;
             this.button1.Text = "Оплатить";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(801, 29);
+            this.linkLabel1.Location = new System.Drawing.Point(260, 29);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(103, 13);
             this.linkLabel1.TabIndex = 5;
@@ -181,7 +182,7 @@ namespace CRMUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(916, 454);
+            this.ClientSize = new System.Drawing.Size(473, 444);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);

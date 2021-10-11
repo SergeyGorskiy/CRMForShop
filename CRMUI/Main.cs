@@ -16,11 +16,14 @@ namespace CRMUI
         CRMContext db;
         private Cart cart;
         private Customer customer;
+        private CashDesk cashDesk;
         public Main()
         {
             InitializeComponent();
             db = new CRMContext();
             cart = new Cart(customer);
+            cashDesk = new CashDesk(1, db.Sellers.FirstOrDefault(), db) {IsModel = false};
+
         }
         private void ProductStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -128,8 +131,27 @@ namespace CRMUI
                     db.SaveChanges();
                     customer = form.Customer;
                 }
+
+                cart.Customer = customer;
             }
             linkLabel1.Text = $"Здравствуй, {customer.Name}";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (customer != null)
+            {
+                cashDesk.Enqueue(cart);
+                var price = cashDesk.Dequeue();
+                listBox2.Items.Clear();
+                cart = new Cart(customer);
+                MessageBox.Show("Покупка выполнена успешно. Сумма: " + price, "Покупка выполнена", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Авторизуйтесь пожалуйста!", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

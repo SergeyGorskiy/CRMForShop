@@ -48,7 +48,6 @@ namespace CRMUI
 
             cashDesk.CheckClosed += CashDeskCheckClosed;
         }
-
         private void CashDeskCheckClosed(object sender, Check e)
         {
             Price.Invoke((Action) delegate

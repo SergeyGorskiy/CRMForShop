@@ -5,7 +5,7 @@ namespace CRMBusinessLogic.Model
 {
     public class CashDesk
     {
-        CRMContext db = new CRMContext();
+        CRMContext db;
         public int Number { get; set; }
         public Seller Seller { get; set; }
         public Queue<Cart> Queue { get; set; }
@@ -13,17 +13,16 @@ namespace CRMBusinessLogic.Model
         public int ExitCustomer { get; set; }
         public bool IsModel { get; set; }
         public int Count => Queue.Count;
-
         public event EventHandler<Check> CheckClosed;
-        public CashDesk(int number, Seller seller)
+        public CashDesk(int number, Seller seller, CRMContext db)
         {
             Number = number;
             Seller = seller;
             Queue = new Queue<Cart>();
             IsModel = true;
             MaxQueueLenght = 10;
+            this.db = db ?? new CRMContext();
         }
-
         public void Enqueue(Cart cart)
         {
             if (Queue.Count < MaxQueueLenght)
@@ -35,7 +34,6 @@ namespace CRMBusinessLogic.Model
                 ExitCustomer++;
             }
         }
-
         public decimal Dequeue()
         {
             decimal sum = 0;
@@ -84,7 +82,6 @@ namespace CRMBusinessLogic.Model
                         sum += product.Price;
                     }
                 }
-
                 check.Price = sum;
                 if (!IsModel)
                 {
@@ -94,7 +91,6 @@ namespace CRMBusinessLogic.Model
             }
             return sum;
         }
-
         public override string ToString()
         {
             return $"Касса №{Number}";
